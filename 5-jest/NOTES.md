@@ -27,7 +27,6 @@ We are going to be using Puppeteer for Integration Testing. But before we instal
 we need to make our application exportable as a module.
 
 ```js
-
 if(require.main === module) {
 	app.listen(post, () => {
 		console.log( `Express started on http://localhost:${port};` +
