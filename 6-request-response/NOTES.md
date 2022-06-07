@@ -115,3 +115,80 @@ See the `.js` files for relevant rendering tasks.
 
 [404 handler](custom-404.js)
 
+
+# Processing Forms
+
+When processing forms, the information from the forms will usually be in `req.body` (sometimes `req.query`)
+
+You can use `req.xhr` to determine if the request was an AJAX request.
+
+In general, you will need middleware to parse the body contents.
+
+`const bodyParser = require('body-parser') // body-parser is now a base module`
+`app.use(bodyParser.urlencoded({ extended: false }))`
+
+...
+
+
+# Providing an API
+
+- GET endpoints
+
+```js
+const tours = [
+	{ id: 0, name: 'Hood River', price: 99.99 },
+	{ id: 1, name: 'Oregon Coast', price 149.95 },
+]
+
+
+// simple GET endpoint returning only JSON
+app.get('/api/tours', (req, res) => res.json(tours))
+
+
+// GET endpoint that returns JSON, XML or Text
+app.get('/api/tours', (req, res) => {
+	const toursXml = '<?xml version="1.0"?><tours>' + 
+		tours.map(p => 
+				`<tour price="${p.price}" id="${p.id}">${p.name}</tour>`
+			).join('') + '</tours>'
+
+	const toursText = tours.map(p => 
+			`${p.id}: ${p.name} ($${p.price})`
+		).join('\n')
+
+	res.format({
+		'application/json': () => res.json(tours),
+		'application/xml': () => res.type('application/xml').send(toursXml),
+		'text/xml': () => res.type('text/xml').send(toursXml),
+		'text/plain': () => res.type('text/plain').send(toursXml)
+	})
+
+})
+```
+
+- PUT endpoint for updating
+
+```js
+app.put('/api/tour/:id', (req, res) => {
+	const p = tours.find(p => p.id === parseInt(req.params.id))
+
+	if(!p) return res.status(404).json({ error: 'No such tour exists' })
+	if (req.body.name) p.name = req.body.name
+	if(req.body.price) p.price = req.body.price
+	res.json({ success: true }) 
+})
+```
+
+- DELETE endpoint
+
+```js
+
+app.delete('/api/tour/:id', (req, res) => {
+	const idx = tours.findIndex(tour => tour.id === parseInt(req.params.id))
+
+	if (idx < 0) return res.json({ error: 'No such tour exists' })
+
+	tour.splice(idx, 1)
+res.json({ success: true })
+})
+```
