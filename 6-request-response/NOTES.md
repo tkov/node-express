@@ -99,3 +99,5 @@ When rendering content, we will usually use `res.render`.
 
 See the `.js` files for relevant rendering tasks.
 
+[basic-rendering.js]('./basic-rendering.js')
+
