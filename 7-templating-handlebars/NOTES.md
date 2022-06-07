@@ -1,4 +1,4 @@
-# Handlbars 
+# Handlebars 
 
 ## The Basics
 
