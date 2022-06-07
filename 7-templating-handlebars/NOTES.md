@@ -70,15 +70,15 @@ Given the context object above, we can form a template the following way:
 
 
 ## Server-side Templates
-...
+`TODO`
 
 ## Views and Layouts
-...
+`TODO`
 
 ## Sections
-...
+`TODO`
 
 
 ## Partials
-...
+`TODO`
 
