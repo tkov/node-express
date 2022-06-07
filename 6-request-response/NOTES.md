@@ -99,5 +99,19 @@ When rendering content, we will usually use `res.render`.
 
 See the `.js` files for relevant rendering tasks.
 
-[basic-rendering.js](basic-rendering.js)
+[Basic Rendering](basic-rendering.js)
+
+[Different Response Codes](different-response-codes.js)
+
+[Passing context to a view](view-with-content.js)
+
+[Rendering a View without a Layout](view-no-layout.js)
+
+[Rendering a View with a Custom Layout](custom-layout.js)
+
+[Rendering Plain Text](plaintext-output.js)
+
+[Error Handler](error-handler.js)
+
+[404 handler](custom-404.js)
 
