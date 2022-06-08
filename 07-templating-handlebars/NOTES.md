@@ -76,7 +76,20 @@ Given the context object above, we can form a template the following way:
 `TODO`
 
 ## Sections
-`TODO`
+
+```js
+
+app.engine('handlebars', expressHandlebars({
+	defaultLayout: 'main',
+	helpers: {
+		section: function(name, options) {
+			if (!this._sections) this._sections = {}
+			this._sections[name] = options.fn(this)
+			return null
+		},
+	}
+}))
+````
 
 
 ## Partials
