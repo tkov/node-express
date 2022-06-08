@@ -93,5 +93,8 @@ app.engine('handlebars', expressHandlebars({
 
 
 ## Partials
-`TODO`
+
+Similar to **components** or *widgets*: a reusable 'chunk of a view' that exist across multiple pages.
+
+
 
