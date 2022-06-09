@@ -6,5 +6,7 @@ exports.about = (req, res) => res.render('about', { fortune: fortune.getFortune(
 
 exports.notFound = (req, res) => res.render('404')
 
+exports.sectionTest = (req, res) => res.render('section-test')
+
 exports.serverError = (err, req, res, next) => res.render('500')
 
