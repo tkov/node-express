@@ -7,16 +7,32 @@ const weatherMiddlware = require('./lib/middleware/weather')
 const app = express()
 
 // configure Handlebars view engine
+
+// let hbs = expressHandlebars.create({
+//   defaultLayout: 'main',
+//   helpers: {
+//     section: function (name, options) {
+//       if(!this._sections) this._sections = {}
+//       this._sections[name] = options.fn(this)
+//       return null
+//     },
+//   },
+// })
+
 app.engine('handlebars', expressHandlebars.engine({
   defaultLayout: 'main',
   helpers: {
     section: function(name, options) {
       if(!this._sections) this._sections = {}
-      this._sections[name] = options.fn(this)
-      return null
+        this._sections[name] = options.fn(this)
+      console.log(this._sections)
+        return null
     },
   },
 }))
+
+// app.engine('handlebars', hbs.engine)
+
 app.set('view engine', 'handlebars')
 
 const port = process.env.PORT || 3000
