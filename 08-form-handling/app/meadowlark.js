@@ -8,6 +8,9 @@ const handlers = require('./lib/handlers')
 
 const bodyParser = require('body-parser')
 
+/* for help with multipart forms -- file upload */
+const multiparty = require('multiparty')
+
 const app = express()
 
 // configuring Handlebars view engine
@@ -40,26 +43,26 @@ app.use(bodyParser.json())
 // - the path is what defines the route
 // - the function is invoked when the route is matched
 
-app.get('/', (req, res) => {
-	// res.type('text/plain')
-	// res.send('Meadowlark Travel');
-	res.render('home')
-})
+// app.get('/', (req, res) => {
+// 	// res.type('text/plain')
+// 	// res.send('Meadowlark Travel');
+// 	res.render('home')
+// })
 
-app.get('/about', (req, res) => {
-	// res.type('text/plain')
-	// res.send('About Meadowlark Travel')
-	const randomFortune = fortunes[Math.floor(Math.random()*fortunes.length)]
-	res.render('about', { fortune: randomFortune })
-}) 
+// app.get('/about', (req, res) => {
+// 	// res.type('text/plain')
+// 	// res.send('About Meadowlark Travel')
+// 	const randomFortune = fortunes[Math.floor(Math.random()*fortunes.length)]
+// 	res.render('about', { fortune: randomFortune })
+// }) 
 
 
 app.get('/newsletter', handlers.newsletter)
 app.post('/api/newsletter-signup', handlers.api.newsletterSignup)
 
-// app.get('/', handlers.home)
+app.get('/', handlers.home)
 
-// app.get('/about', handlers.about)
+app.get('/about', handlers.about)
 
 
 /* linking our handlers for our newsletter signup */
@@ -74,6 +77,18 @@ app.get('/newsletter-signup/thank-you', handlers.newsletterSignupThankYou)
 // app.use(handlers.notFound)
 
 // app.use(handlers.serverError)
+
+app.get('/contest/vacation-photo', handlers.vacationPhotoContest)
+/** our form routes **/
+app.post('/contest/vacation-photo/:year/:month', (req, res) => {
+	const form = new multiparty.Form()
+	form.parse(req, (err, fields, files) => {
+		if (err) return res.status(500).send({ error: err.message })
+		handlers.vacationPhotoContestProcess(req, res, fields, files)
+	})
+})
+
+app.get('/contest/vacation-photo-thank-you', handlers.vacationPhotoContestProcessThankYou)
 
 
 // custom 404 page
